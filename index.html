@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Wileylabs</title>
-    <script id="site-data" type="application/json">{"apps":[{"name":"Rap Lyrics Studio ","img":"assets/raplyrics.jpg","rate":"5","link":""}],"tools":[{"name":"Demo Tool","img":"https://cdn-icons-png.flaticon.com/512/3075/3075908.png","link":"#"}],"about":[{"text":"Demo Link","link":"#"}]}</script>
+    <script id="site-data" type="application/json">{"apps":[{"name":"Rap Lyrics Studio ","img":"assets/raplyrics.jpg","rate":"5","link":""}],"tools":[{"name":"Site Engineer ","img":"assets/tool_icon.png","link":""}],"about":[{"text":"Demo Link","link":"#","type":"link"}]}</script>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
@@ -12,7 +11,7 @@
         .fade-in { animation: fadeIn 1.4s forwards ease-in-out; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         .gradient-text { background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .glass { background: rgba(255, 255, 255, 0.06); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.12); }
+        .glass { background: rgba(255, 255, 255, 0.06); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.12); overflow: hidden; }
         .star { color: #ffd700; }
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
@@ -27,50 +26,43 @@
                 <h1 class="text-4xl md:text-6xl font-bold mb-4">Wileylabs <span class="gradient-text">Hub</span></h1>
                 <p class="text-gray-300 max-w-xl">Central Command for all Apps, Tools, and Experiments.</p>
             </section>
-
             <div class="max-w-4xl mx-auto pb-20 space-y-12 px-6">
-                
                 <section class="fade-in">
                     <h2 class="text-xl font-bold mb-4 border-l-4 border-blue-500 pl-3">Our Apps</h2>
                     <div class="flex overflow-x-auto space-x-4 pb-4 no-scrollbar snap-x">
                         
-                <a href="" class="glass p-4 rounded-xl min-w-[160px] w-[160px] flex flex-col items-center justify-center hover:scale-105 transition transform cursor-pointer snap-center">
-                    <img src="assets/assets/raplyrics.jpg" class="w-16 h-16 mb-3 object-contain rounded-lg">
-                    <h3 class="text-sm font-semibold text-center mb-1 truncate w-full">Rap Lyrics Studio </h3>
-                    <div class="text-xs mb-2"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div>
-                    <span class="text-xs text-blue-400">View Info &rarr;</span>
+                <a href="" class="glass rounded-xl min-w-[200px] w-[200px] flex flex-col hover:scale-105 transition transform cursor-pointer snap-center">
+                    <img src="assets/raplyrics.jpg" class="w-full h-32 object-cover bg-black/30">
+                    <div class="p-4 flex flex-col items-center">
+                        <h3 class="text-sm font-semibold text-center mb-1 truncate w-full">Rap Lyrics Studio </h3>
+                        <div class="text-xs mb-2"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div>
+                        <span class="text-xs text-blue-400">View Info &rarr;</span>
+                    </div>
                 </a>
             
                     </div>
                 </section>
-
                 <section class="fade-in">
                     <h2 class="text-xl font-bold mb-4 border-l-4 border-cyan-400 pl-3">Online Tools</h2>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         
-                <a href="#" class="glass p-4 rounded-xl flex items-center space-x-4 hover:bg-white/10 transition cursor-pointer">
-                    <img src="https://cdn-icons-png.flaticon.com/512/3075/3075908.png" class="w-12 h-12 object-contain">
+                <a href="" class="glass p-4 rounded-xl flex items-center space-x-4 hover:bg-white/10 transition cursor-pointer">
+                    <img src="assets/tool_icon.png" class="w-12 h-12 object-contain">
                     <div>
-                        <h3 class="text-lg font-semibold">Demo Tool</h3>
+                        <h3 class="text-lg font-semibold">Site Engineer </h3>
                         <span class="text-xs text-gray-400">Launch Tool</span>
                     </div>
                 </a>
             
                     </div>
                 </section>
-
                 <section class="fade-in">
                      <h2 class="text-xl font-bold mb-4 border-l-4 border-purple-500 pl-3">Information</h2>
                      <div class="glass rounded-xl p-4 grid grid-cols-1 md:grid-cols-2 gap-2">
-                        
-                <a href="#" class="block px-4 py-2 text-gray-400 hover:text-white hover:bg-white/5 rounded-lg transition text-center md:text-left">
-                    Demo Link
-                </a>
-            
+                        <a href="#" class="block px-4 py-2 text-gray-300 hover:text-white hover:bg-white/5 rounded-lg transition text-center md:text-left">Demo Link</a>
                      </div>
                 </section>
             </div>
-            
     <footer class="py-8 text-center text-gray-400 fade-in text-sm">
         © 2025 Wileylabs • All Rights Reserved
     </footer>
