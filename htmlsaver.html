@@ -1,0 +1,256 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>HTML Saver — Editor & Downloader</title>
+  <style>
+    :root{
+      --bg:#0f1724; --card:#0b1220; --muted:#9aa4b2; --accent:#6ee7b7; --glass: rgba(255,255,255,0.03);
+      --radius:14px; --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", monospace;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;padding:24px;font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; background: linear-gradient(180deg,#071127 0%, #081322 100%); color:#e6eef6;
+      -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+    }
+    .app{
+      max-width:1000px;margin:0 auto;background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);border-radius:18px;padding:18px; box-shadow: 0 8px 30px rgba(2,6,23,0.6);
+      display:grid;grid-template-columns:1fr;gap:14px;
+    }
+    header{display:flex;gap:12px;align-items:center}
+    .logo{width:56px;height:56px;border-radius:12px;background:linear-gradient(135deg,#073b3a,#0ea5a3);display:flex;align-items:center;justify-content:center;font-weight:700}
+    h1{margin:0;font-size:18px}
+    p.lead{margin:0;color:var(--muted);font-size:13px}.editor-wrap{display:grid;grid-template-columns:1fr 360px;gap:14px}
+@media (max-width:880px){.editor-wrap{grid-template-columns:1fr;}}
+
+.card{background:var(--card);padding:12px;border-radius:12px;box-shadow:inset 0 1px 0 rgba(255,255,255,0.02)}
+
+label.small{font-size:12px;color:var(--muted);display:block;margin-bottom:6px}
+
+textarea#htmlInput{width:100%;min-height:420px;border-radius:10px;border:0;padding:12px;font-family:var(--mono);font-size:13px;background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));color:#e6eef6;resize:vertical}
+
+.rightcol{display:flex;flex-direction:column;gap:12px}
+input[type=text]{width:100%;padding:10px;border-radius:8px;border:0;background:var(--glass);color:inherit}
+
+.btnrow{display:flex;gap:8px;align-items:center}
+button.btn{padding:10px 14px;border-radius:10px;border:0;background:linear-gradient(90deg,#065f46,#10b981);color:#022;cursor:pointer;font-weight:600}
+button.ghost{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--muted)}
+button.warn{background:linear-gradient(90deg,#eab308,#f59e0b);color:#1a1a1a}
+
+.muted{color:var(--muted);font-size:13px}
+.small-info{font-size:12px;color:var(--muted)}
+
+.preview{flex:1;border-radius:10px;overflow:hidden;border:1px solid rgba(255,255,255,0.03)}
+.iframe-container{height:400px}
+iframe.preview-frame{height:100%;width:100%;border:0;background:white}
+
+.toolbar{display:flex;gap:8px;flex-wrap:wrap}
+
+footer{display:flex;justify-content:space-between;align-items:center;padding-top:6px;opacity:0.9}
+
+.sample-btn{background:linear-gradient(90deg,#2563eb,#7c3aed);color:white;padding:8px 10px;border-radius:8px;border:0}
+
+/* mobile tweaks */
+@media (max-width:480px){textarea#htmlInput{min-height:280px}.iframe-container{height:220px}}
+
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header>
+      <div class="logo">HS</div>
+      <div>
+        <h1>HTML Saver</h1>
+        <p class="lead">Paste or write HTML, preview it, then download a .html file. Mobile & desktop friendly.</p>
+      </div>
+    </header><div class="editor-wrap">
+  <div class="card">
+    <div class="toolbar" style="margin-bottom:10px;">
+      <button class="sample-btn" id="insertTemplate">Insert starter template</button>
+      <button class="ghost" id="clearEditor">Clear</button>
+      <button class="ghost" id="formatHtml">Format</button>
+    </div>
+
+    <label class="small">HTML Input</label>
+    <textarea id="htmlInput" placeholder="Type or paste your HTML here...">&lt;!doctype html&gt;
+
+<html> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Document</title></head> <body> <h1>Hello from HTML Saver</h1> <p>This file was previewed and downloaded from HTML Saver.</p> </body> </html></textarea>
+
+<div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px;flex-wrap:wrap;gap:8px;">
+      <div class="small-info muted">Tip: filename will have <strong>.html</strong> appended automatically.</div>
+      <div class="btnrow">
+        <button class="btn" id="playBtn">Play (Preview)</button>
+        <button class="btn" id="downloadBtn">Download</button>
+      </div>
+    </div>
+
+  </div>
+
+  <aside class="rightcol">
+    <div class="card">
+      <label class="small">File name (without <code>.html</code>)</label>
+      <input id="fileName" type="text" placeholder="my-page" value="my-page">
+
+      <div style="height:8px"></div>
+      <label class="small">Options</label>
+      <div style="display:flex;gap:8px;margin-top:6px;flex-wrap:wrap;">
+        <button class="ghost" id="copyBtn">Copy HTML</button>
+        <button class="ghost" id="saveLocalBtn">Save in browser</button>
+        <button class="ghost" id="loadLocalBtn">Load saved</button>
+      </div>
+
+      <div style="height:8px"></div>
+      <div class="muted">Preview</div>
+      <div class="preview card">
+        <div class="iframe-container" id="previewFrameWrap">
+          <iframe class="preview-frame" id="previewFrame" sandbox="allow-scripts allow-forms"></iframe>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+        <div class="muted">Quick actions</div>
+        <div class="muted" id="sizeInfo">0 KB</div>
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button class="ghost" id="downloadZip">Download ZIP</button>
+        <button class="warn" id="downloadBtn2">Download (Alt)</button>
+      </div>
+    </div>
+
+  </aside>
+</div>
+
+<footer>
+  <div class="muted">Made with ♥ — HTML Saver</div>
+  <div class="muted">Mobile / Desktop friendly</div>
+</footer>
+
+  </div>  <script>
+    const htmlInput = document.getElementById('htmlInput');
+    const fileNameInput = document.getElementById('fileName');
+    const playBtn = document.getElementById('playBtn');
+    const downloadBtn = document.getElementById('downloadBtn');
+    const previewFrame = document.getElementById('previewFrame');
+    const sizeInfo = document.getElementById('sizeInfo');
+
+    function updateSize(){
+      try{
+        const bytes = new TextEncoder().encode(htmlInput.value).length;
+        sizeInfo.textContent = ((bytes/1024).toFixed(2)) + ' KB';
+      }catch(e){sizeInfo.textContent='-'}
+    }
+
+    htmlInput.addEventListener('input', ()=>{ updateSize(); autoPreview(); });
+    updateSize();
+
+    function autoPreview(){
+      // live preview by writing blob URL to iframe
+      const blob = new Blob([htmlInput.value], {type:'text/html'});
+      const url = URL.createObjectURL(blob);
+      previewFrame.src = url;
+      // revoke blob after load to free memory
+      previewFrame.onload = ()=>{try{URL.revokeObjectURL(url);}catch(e){}}
+    }
+
+    // initial preview
+    autoPreview();
+
+    playBtn.addEventListener('click', ()=>{
+      // open a preview in a new tab/window using blob
+      const blob = new Blob([htmlInput.value], {type:'text/html'});
+      const url = URL.createObjectURL(blob);
+      const w = window.open('', '_blank');
+      if(!w){ alert('Popup blocked — allow popups for this site to preview in a new tab.'); return }
+      w.document.open();
+      // write a small wrapper that redirects to blob URL (avoids cross-origin issues)
+      w.document.write('<!doctype html><meta charset="utf-8"><script>location.replace("' + url + '")</script>');w.document.close();
+  // cannot revoke url reliably until the new window loads it, so wait a bit
+  setTimeout(()=>{try{URL.revokeObjectURL(url);}catch(e){}}, 2000);
+});
+
+function downloadHTML(filename){
+  const blob = new Blob([htmlInput.value], {type:'text/html'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = filename.endsWith('.html') ? filename : filename + '.html';
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  setTimeout(()=>{try{URL.revokeObjectURL(a.href)}catch(e){}},1500);
+}
+
+downloadBtn.addEventListener('click', ()=>{
+  const fn = fileNameInput.value.trim() || 'page';
+  downloadHTML(fn);
+});
+
+document.getElementById('downloadBtn2').addEventListener('click', ()=>{
+  const fn = fileNameInput.value.trim() || 'page';
+  downloadHTML(fn + '-alt');
+});
+
+document.getElementById('copyBtn').addEventListener('click', async ()=>{
+  try{ await navigator.clipboard.writeText(htmlInput.value); alert('HTML copied to clipboard'); }
+  catch(e){ alert('Copy failed — try selecting and copying manually'); }
+});
+
+document.getElementById('insertTemplate').addEventListener('click', ()=>{
+  htmlInput.value = `<!doctype html>\n<html>\n<head>\n  <meta charset=\"utf-8\">\n  <meta name=\"viewport\" content=\"width=device-width,initial-scale=1\">\n  <title>My Page</title>\n  <style>body{font-family:sans-serif;padding:24px}</style>\n</head>\n<body>\n  <h1>Hello from template</h1>\n  <p>Edit this and press Download.</p>\n</body>\n</html>`;
+  updateSize(); autoPreview();
+});
+
+document.getElementById('clearEditor').addEventListener('click', ()=>{ if(confirm('Clear editor?')){ htmlInput.value=''; updateSize(); autoPreview(); } });
+
+document.getElementById('formatHtml').addEventListener('click', ()=>{
+  // minimal pretty-print using browser DOMParser for HTML
+  try{
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(htmlInput.value, 'text/html');
+    const pretty = '<!doctype html>\n' + indentElements(doc.documentElement, 0);
+    htmlInput.value = pretty; updateSize(); autoPreview();
+  }catch(e){ alert('Format failed'); }
+});
+
+function indentElements(node, level){
+  const indent = '  '.repeat(level);
+  if(node.nodeType === Node.TEXT_NODE){ return indent + node.textContent.trim().replace(/\s+/g,' ') + '\n'; }
+  let tag = node.tagName ? node.tagName.toLowerCase() : '#document';
+  let out = indent + '<' + tag + '>' + '\n';
+  node.childNodes.forEach(child=>{ out += indentElements(child, level+1); });
+  out += indent + '</' + tag + '>' + '\n';
+  return out;
+}
+
+// local save/load
+document.getElementById('saveLocalBtn').addEventListener('click', ()=>{
+  localStorage.setItem('htmlSaverDraft', htmlInput.value);
+  alert('Saved in browser storage');
+});
+document.getElementById('loadLocalBtn').addEventListener('click', ()=>{
+  const v = localStorage.getItem('htmlSaverDraft');
+  if(!v){ alert('No saved draft found'); return }
+  htmlInput.value = v; updateSize(); autoPreview();
+});
+
+// download zip (simple single file zip using blob as fallback -> create .zip like file with content)
+document.getElementById('downloadZip').addEventListener('click', ()=>{
+  const fn = (fileNameInput.value.trim() || 'page') + '.html';
+  // create a simple zip using JSZip if available, otherwise fallback to .html download
+  if(window.JSZip){
+    const zip = new JSZip(); zip.file(fn, htmlInput.value); zip.generateAsync({type:'blob'}).then(content=>{ const a=document.createElement('a'); a.href=URL.createObjectURL(content); a.download=(fn.replace(/\.html$/,'') + '.zip'); document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(a.href),1500); });
+  }else{
+    if(confirm('JSZip not found. Download raw .html instead?')) downloadHTML(fn);
+  }
+});
+
+// update initial preview on load
+window.addEventListener('load', ()=>{ updateSize(); autoPreview(); });
+
+  </script>
+</body>
+</html>
