@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rap Lyrics</title>
+    <script id="site-data"
+        type="application/json">{"appName":"**Rap Lyrics**","appCaption":"Rap Writing Assistant developed specially for Professional rappers.","appLogo":"assets/rlogo.png","downloadLink":"https://play.google.com/store/apps/details?id=com.wileylab.raplyric","contentTitle":"✨ What Makes Us Essential","appDescription":"Take your rap game to the next level with Rap Lyrics, the app designed specifically for professional rappers and aspiring artists to save time and reduce stress while creating powerful lyrics.\nAI-Powered Rap Assistant 🎧\nMeet your human-like AI rap writing assistant, designed to enhance your creativity. The latest update brings dual suggestions:\n1. Rhyming Line – A line that perfectly rhymes with what you’ve written.\n2. Non-Rhyming Line – A natural next line when you don’t want a rhyme every time.\nCustomize your experience by:\nSetting the theme of your song.\nChoosing the last word for perfect rhymes.\nWhen used effectively, these tools ensure your lyrics sound professional and authentic.\nRap Generator for Every Mood ❤️🎙️\nFeeling stuck or just starting out? Our top-tier rap generator has got you covered:\nSelect a theme for your song.\nImitate your favorite rapper’s style.\nShare what’s on your mind, and watch a complete, heartfelt rap come to life instantly.\nExplore & Learn\nDive into a library of over 2,000 raps, created by our vibrant rap community. Explore diverse styles and trends to stay ahead in the game.\nWhy Rap Lyrics?\nSave time and effort with advanced AI tools.\nLearn from an extensive collection of community-generated raps.\nPerfect for pros and beginners alike.\nBoost your rapping career today. Download Rap Lyrics now and unleash your full potential!","features":["⚡ **Blazing Fast:** Optimized for the latest Android devices.","🔒 **Secure & Private:** Your data is always protected.","🎨 **Beautiful Dark Mode:** Easy on the eyes, day or night."],"ratingScore":"4.7","ratingCount":"Based on 1250+ reviews","reviews":["https://via.placeholder.com/300x500/1E1E1E/E0E0E0?text=Review+Screenshot+1","https://via.placeholder.com/300x500/1E1E1E/E0E0E0?text=Review+Screenshot+2","https://via.placeholder.com/300x500/1E1E1E/E0E0E0?text=Review+Screenshot+3"]}</script>
+    <style>
+        /* --- General Styling for Dark Theme --- */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #121212;
+            color: #E0E0E0;
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: #1E1E1E;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .header-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-bottom: 20px;
+        }
+
+        .app-info {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .logo {
+            width: 72px;
+            height: 72px;
+            border-radius: 18px;
+            background-color: #333;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .text-info h1 {
+            margin: 0;
+            font-size: 2.2em;
+            color: #4CAF50;
+        }
+
+        .text-info p {
+            margin: 0;
+            font-size: 1em;
+            color: #A0A0A0;
+        }
+
+        .download-btn {
+            background-color: #4CAF50;
+            color: #FFFFFF;
+            padding: 12px 25px;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        .download-btn:hover {
+            background-color: #66BB6A;
+        }
+
+        .divider {
+            border: 0;
+            height: 1px;
+            background-image: linear-gradient(to right, rgba(76, 175, 80, 0), rgba(76, 175, 80, 0.75), rgba(76, 175, 80, 0));
+            margin: 20px 0 30px 0;
+        }
+
+        .content-row {
+            display: flex;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .description-box {
+            flex: 2;
+        }
+
+        .description-box h2 {
+            color: #4CAF50;
+            font-size: 1.5em;
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+
+        .rating-box {
+            flex: 1;
+            background-color: #282828;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .rating-number {
+            font-size: 3.5em;
+            font-weight: bold;
+            color: #FFC107;
+            margin-bottom: 5px;
+        }
+
+        .stars {
+            color: #FFC107;
+            font-size: 1.8em;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+
+        .review-count {
+            color: #A0A0A0;
+            font-size: 0.9em;
+        }
+
+        .screenshots-row h2 {
+            color: #E0E0E0;
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            border-left: 4px solid #4CAF50;
+            padding-left: 10px;
+        }
+
+        .screenshot-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .screenshot-item {
+            background-color: #333;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .screenshot-item img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border: 2px solid #4CAF50;
+            border-radius: 8px;
+            opacity: 0.85;
+            transition: opacity 0.3s ease;
+        }
+
+        .screenshot-item img:hover {
+            opacity: 1;
+        }
+
+        @media (max-width: 600px) {
+            .header-row {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .app-info {
+                margin-bottom: 15px;
+            }
+
+            .download-btn {
+                width: 100%;
+                text-align: center;
+            }
+
+            .content-row {
+                flex-direction: column;
+            }
+
+            .rating-box {
+                order: -1;
+                margin-bottom: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header-row">
+            <div class="app-info">
+                <div class="logo" style="background-image: url('assets/rlogo.png');" title="App Logo"></div>
+                <div class="text-info">
+                    <h1><strong>Rap Lyrics</strong></h1>
+                    <p>Rap Writing Assistant developed specially for Professional rappers.</p>
+                </div>
+            </div>
+            <a href="https://play.google.com/store/apps/details?id=com.wileylab.raplyric" class="download-btn"
+                target="_blank">DOWNLOAD NOW</a>
+        </div>
+
+        <hr class="divider">
+
+        <div class="content-row">
+            <div class="description-box">
+                <h2>✨ What Makes Us Essential</h2>
+                <p>Take your rap game to the next level with Rap Lyrics, the app designed specifically for professional
+                    rappers and aspiring artists to save time and reduce stress while creating powerful
+                    lyrics.<br>AI-Powered Rap Assistant 🎧<br>Meet your human-like AI rap writing assistant, designed to
+                    enhance your creativity. The latest update brings dual suggestions:<br>1. Rhyming Line – A line that
+                    perfectly rhymes with what you’ve written.<br>2. Non-Rhyming Line – A natural next line when you
+                    don’t want a rhyme every time.<br>Customize your experience by:<br>Setting the theme of your
+                    song.<br>Choosing the last word for perfect rhymes.<br>When used effectively, these tools ensure
+                    your lyrics sound professional and authentic.<br>Rap Generator for Every Mood ❤️🎙️<br>Feeling stuck
+                    or just starting out? Our top-tier rap generator has got you covered:<br>Select a theme for your
+                    song.<br>Imitate your favorite rapper’s style.<br>Share what’s on your mind, and watch a complete,
+                    heartfelt rap come to life instantly.<br>Explore & Learn<br>Dive into a library of over 2,000 raps,
+                    created by our vibrant rap community. Explore diverse styles and trends to stay ahead in the
+                    game.<br>Why Rap Lyrics?<br>Save time and effort with advanced AI tools.<br>Learn from an extensive
+                    collection of community-generated raps.<br>Perfect for pros and beginners alike.<br>Boost your
+                    rapping career today. Download Rap Lyrics now and unleash your full potential!</p>
+                <ul>
+                    <li>⚡ <strong>Blazing Fast:</strong> Optimized for the latest Android devices.</li>
+                    <li>🔒 <strong>Secure & Private:</strong> Your data is always protected.</li>
+                    <li>🎨 <strong>Beautiful Dark Mode:</strong> Easy on the eyes, day or night.</li>
+                </ul>
+            </div>
+
+            <div class="rating-box">
+                <p class="rating-number">4.7</p>
+                <div class="stars">★★★★<span style="opacity:0.5;">★</span></div>
+                <p class="review-count">Based on 1250+ reviews</p>
+            </div>
+        </div>
+
+        <div class="screenshots-row">
+            <h2>💖 What Our Users Are Saying</h2>
+            <div class="screenshot-gallery">
+                <div class="screenshot-item">
+                    <img src="https://via.placeholder.com/300x500/1E1E1E/E0E0E0?text=Review+Screenshot+1"
+                        alt="Review Screenshot">
+                </div>
+
+                <div class="screenshot-item">
+                    <img src="https://via.placeholder.com/300x500/1E1E1E/E0E0E0?text=Review+Screenshot+2"
+                        alt="Review Screenshot">
+                </div>
+
+                <div class="screenshot-item">
+                    <img src="https://via.placeholder.com/300x500/1E1E1E/E0E0E0?text=Review+Screenshot+3"
+                        alt="Review Screenshot">
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

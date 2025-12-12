@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vigilert - Local Alerts</title>
+    <script id="site-data" type="application/json">{"themeColor":"#4caea7","secondaryColor":"#00ffd5","bgColorDark":"#0a0a0a","bgColorLight":"#1a1a1a","textColor":"#E0E0E0","containerBg":"rgba(30, 30, 30, 0.85)","appName":"Vigilert - Local Alerts","appCaption":"Stay informed and safe on the road with Driving Alert, the community-powered safety app that keeps you updated about road conditions in real-time.","appLogo":"assets/atom.webp","downloadLink":"https://play.google.com/store/apps/details?id=com.wileylab.helmetalert","floatingWords":"RHYME, FLOW, BEAT, LYRICS, RAP, MUSIC, ARTIST, CREATIVE, WRITE","contentTitle":"✨ What Makes Us Essential","appDescription":"Your Road Safety Companion\n\nStay informed and safe on the road with Driving Alert, the community-powered safety app that keeps you updated about road conditions in real-time.\n\nKey Features:\n• Real-time alerts about accidents, roadblocks, and unsafe conditions\n• Community-driven safety updates\n• City-specific notifications\n• Easy alert creation and sharing\n• Anonymous user system for privacy\n• Bad words filter for clean communication\nHow It Works:\n1. Select your current city\n2. Enable notifications\n3. Receive instant alerts about:\n- Accidents\n- Road blocks\n- Unsafe driving conditions\n- Hazardous areas\n\nSafety First:\n• Anonymous reporting system\n• Verified community alerts\n• Location-based notifications\n• Emergency situation awareness\n\nUser-Friendly:\n• Simple, intuitive interface\n• Quick alert creation\n• Easy city selection\n• Instant notifications\n• Clean, modern design\n\nStay Connected:\n• Get notified about new alerts in your city\n• Share important safety information\n• Help others stay safe on the road\n• Build a safer driving community\n\nImportant:\nThis app is designed to enhance road safety awareness. Always follow traffic rules and drive responsibly. The app is not a substitute for emergency services.\n\n\nNote: This app uses anonymous authentication and does not collect personal information. Your privacy is our priority.\n","features":["⚡ **Blazing Fast:** Optimized for the latest Android devices.","🔒 **Secure & Private:** Your data is always protected.","🎨 **Beautiful Dark Mode:** Easy on the eyes, day or night."],"ratingScore":"4.9","ratingCount":"Based on 100+ reviews","reviews":["https://via.placeholder.com/300x500/1E1E1E/E0E0E0?text=Review+Screenshot+1","https://via.placeholder.com/300x500/1E1E1E/E0E0E0?text=Review+Screenshot+2","https://via.placeholder.com/300x500/1E1E1E/E0E0E0?text=Review+Screenshot+3"]}</script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Orbitron:wght@400;500&display=swap');
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --theme-color: #4caea7;
+            --secondary-color: #00ffd5;
+            --bg-dark: #0a0a0a;
+            --bg-light: #1a1a1a;
+            --text-color: #E0E0E0;
+            --container-bg: rgba(30, 30, 30, 0.85);
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+            background: radial-gradient(ellipse at top, var(--bg-light) 0%, var(--bg-dark) 70%);
+            min-height: 100vh;
+        }
+        /* Animated BG */
+        .bg-elements { position: fixed; width: 100%; height: 100%; top: 0; left: 0; z-index: -1; overflow: hidden; }
+        .bg-element { position: absolute; border-radius: 50%; opacity: 0.1; filter: blur(40px); animation: float 25s infinite linear; }
+        .bg-element:nth-child(1) { width: 300px; height: 300px; background: linear-gradient(45deg, var(--theme-color), #2E7D32); top: 10%; left: 5%; }
+        .bg-element:nth-child(2) { width: 200px; height: 200px; background: linear-gradient(45deg, var(--secondary-color), #FF9800); top: 60%; right: 10%; animation-delay: -5s; animation-duration: 20s; }
+        .bg-element:nth-child(3) { width: 250px; height: 250px; background: linear-gradient(45deg, #2196F3, #0D47A1); bottom: 10%; left: 15%; animation-delay: -10s; animation-duration: 30s; }
+        @keyframes float { 0%, 100% { transform: translate(0, 0) rotate(0deg); } 25% { transform: translate(20px, 40px) rotate(90deg); } 50% { transform: translate(0, 80px) rotate(180deg); } 75% { transform: translate(-20px, 40px) rotate(270deg); } }
+        
+        /* Container */
+        .container {
+            max-width: 1100px; margin: 0 auto; background-color: var(--container-bg); padding: 30px; border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.7); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative; overflow: hidden; animation: fadeIn 1.2s ease-out; margin-top: 20px; margin-bottom: 20px;
+        }
+        .container::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 5px;
+            background: linear-gradient(90deg, var(--theme-color), var(--secondary-color), var(--theme-color));
+            background-size: 200% 100%; animation: gradientShift 3s infinite linear;
+        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes gradientShift { 0% { background-position: 0% 50%; } 100% { background-position: 200% 50%; } }
+
+        /* Header */
+        .header-row { display: flex; align-items: center; justify-content: space-between; padding-bottom: 30px; flex-wrap: wrap; }
+        .app-info { display: flex; align-items: center; gap: 25px; }
+        .logo { 
+            width: 90px; height: 90px; border-radius: 22px; background-color: #333; background-size: cover; background-position: center; 
+            box-shadow: 0 8px 25px rgba(0,0,0, 0.3); transition: all 0.4s ease; animation: pulse 4s infinite ease-in-out;
+            border: 2px solid rgba(255,255,255,0.1);
+        }
+        .logo:hover { transform: scale(1.05) rotate(5deg); box-shadow: 0 12px 35px rgba(0,0,0, 0.5); }
+        @keyframes pulse { 0%, 100% { box-shadow: 0 8px 25px rgba(0,0,0, 0.3); } 50% { box-shadow: 0 8px 30px rgba(0,0,0, 0.6); } }
+        
+        .text-info h1 { margin: 0; font-size: 2.5em; color: var(--theme-color); font-family: 'Orbitron', sans-serif; text-shadow: 0 0 10px rgba(0,0,0, 0.5); letter-spacing: 1px; }
+        .text-info p { margin: 10px 0 0 0; font-size: 1.1em; color: #AAA; max-width: 500px; }
+
+        .download-btn {
+            background: linear-gradient(45deg, var(--theme-color), #2E7D32); color: #FFFFFF; padding: 16px 30px; text-decoration: none;
+            border-radius: 12px; font-size: 1.2em; font-weight: bold; transition: all 0.3s ease; box-shadow: 0 6px 20px rgba(0,0,0, 0.4);
+            display: flex; align-items: center; gap: 10px; animation: buttonFloat 3s infinite ease-in-out;
+        }
+        .download-btn:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0, 0.6); filter: brightness(1.1); }
+        @keyframes buttonFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+
+        .divider { border: 0; height: 2px; background: linear-gradient(to right, transparent, var(--theme-color), transparent); margin: 25px 0 40px 0; position: relative; }
+        .divider::after { content: '🎤'; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: #1E1E1E; padding: 0 15px; font-size: 1.5em; border-radius: 50%; }
+
+        /* Content */
+        .content-row { display: flex; gap: 40px; margin-bottom: 50px; flex-wrap: wrap; }
+        .description-box { flex: 2; min-width: 300px; }
+        .description-box h2 { color: var(--secondary-color); font-size: 1.8em; margin-bottom: 20px; font-family: 'Orbitron', sans-serif; display: flex; align-items: center; gap: 10px; }
+        .description-box h2::before { content: ''; width: 10px; height: 30px; background: linear-gradient(to bottom, var(--theme-color), var(--secondary-color)); border-radius: 5px; }
+        .description-box p { margin-bottom: 20px; color: #CCC; line-height: 1.8; padding-left: 20px; border-left: 3px solid rgba(255,255,255, 0.1); }
+        .description-box ul { list-style: none; padding-left: 0; margin-top: 25px; }
+        .description-box li { margin-bottom: 15px; padding-left: 35px; position: relative; transition: transform 0.3s ease; }
+        .description-box li:hover { transform: translateX(10px); color: #FFF; }
+        .description-box li::before { content: '🎵'; position: absolute; left: 0; top: 0; font-size: 1.2em; }
+
+        /* Rating */
+        .rating-box {
+            flex: 1; background: linear-gradient(135deg, rgba(40,40,40,0.9), rgba(30,30,30,0.9)); padding: 30px; border-radius: 18px;
+            text-align: center; box-shadow: 0 10px 30px rgba(0,0,0, 0.5); border: 1px solid rgba(255,255,255, 0.1); min-width: 250px;
+            transition: transform 0.4s ease;
+        }
+        .rating-box:hover { transform: translateY(-10px); }
+        .rating-number { font-size: 4em; font-weight: bold; color: var(--secondary-color); margin-bottom: 10px; font-family: 'Orbitron', sans-serif; }
+        .stars { color: var(--secondary-color); font-size: 2.2em; letter-spacing: 5px; margin-bottom: 15px; }
+        .review-count { color: #A0A0A0; font-size: 1em; padding: 10px; background: rgba(0,0,0,0.3); border-radius: 8px; display: inline-block; }
+
+        /* Screenshots */
+        .screenshots-row h2 { color: var(--text-color); font-size: 1.8em; margin-bottom: 25px; padding-left: 15px; font-family: 'Orbitron', sans-serif; }
+        .screenshot-gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
+        .screenshot-item { background-color: #252525; border-radius: 15px; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0, 0.4); transition: all 0.4s ease; cursor: pointer; }
+        .screenshot-item:hover { transform: translateY(-15px) scale(1.03); box-shadow: 0 20px 40px rgba(0,0,0, 0.6); }
+        .screenshot-item img { width: 100%; height: auto; display: block; border: 2px solid transparent; border-radius: 15px; transition: all 0.5s ease; }
+        .screenshot-item:hover img { border-color: var(--theme-color); filter: brightness(1.1); }
+
+        /* Floating Text */
+        .floating-text { position: absolute; color: rgba(255,255,255, 0.05); font-size: 1.5em; pointer-events: none; animation: floatText 15s infinite linear; z-index: -1; font-weight: 900; }
+        @keyframes floatText { 0% { transform: translate(0, 0) rotate(0deg); opacity: 0; } 10% { opacity: 0.3; } 90% { opacity: 0.3; } 100% { transform: translate(100px, -100px) rotate(360deg); opacity: 0; } }
+
+        @media (max-width: 768px) {
+            .header-row { flex-direction: column; align-items: flex-start; }
+            .app-info { margin-bottom: 20px; }
+            .download-btn { width: 100%; justify-content: center; }
+            .container { padding: 20px; margin: 10px; }
+            .text-info h1 { font-size: 2em; }
+        }</style>
+</head>
+<body>
+    <div class="bg-elements">
+        <div class="bg-element"></div><div class="bg-element"></div><div class="bg-element"></div>
+    </div>
+    
+    <div class="container">
+        <div class="header-row">
+            <div class="app-info">
+                <div class="logo" style="background-image: url('assets/atom.webp');" title="App Logo"></div>
+                <div class="text-info">
+                    <h1>Vigilert - Local Alerts</h1>
+                    <p>Stay informed and safe on the road with Driving Alert, the community-powered safety app that keeps you updated about road conditions in real-time.</p>
+                </div>
+            </div>
+            <a href="https://play.google.com/store/apps/details?id=com.wileylab.helmetalert" class="download-btn" target="_blank"><span>🎵</span> DOWNLOAD NOW</a>
+        </div>
+
+        <hr class="divider">
+
+        <div class="content-row">
+            <div class="description-box">
+                <h2>✨ What Makes Us Essential</h2>
+                <div>Your Road Safety Companion<br><br>Stay informed and safe on the road with Driving Alert, the community-powered safety app that keeps you updated about road conditions in real-time.<br><br>Key Features:<br>• Real-time alerts about accidents, roadblocks, and unsafe conditions<br>• Community-driven safety updates<br>• City-specific notifications<br>• Easy alert creation and sharing<br>• Anonymous user system for privacy<br>• Bad words filter for clean communication<br>How It Works:<br>1. Select your current city<br>2. Enable notifications<br>3. Receive instant alerts about:<br>- Accidents<br>- Road blocks<br>- Unsafe driving conditions<br>- Hazardous areas<br><br>Safety First:<br>• Anonymous reporting system<br>• Verified community alerts<br>• Location-based notifications<br>• Emergency situation awareness<br><br>User-Friendly:<br>• Simple, intuitive interface<br>• Quick alert creation<br>• Easy city selection<br>• Instant notifications<br>• Clean, modern design<br><br>Stay Connected:<br>• Get notified about new alerts in your city<br>• Share important safety information<br>• Help others stay safe on the road<br>• Build a safer driving community<br><br>Important:<br>This app is designed to enhance road safety awareness. Always follow traffic rules and drive responsibly. The app is not a substitute for emergency services.<br><br><br>Note: This app uses anonymous authentication and does not collect personal information. Your privacy is our priority.<br></div>
+                <ul><li>⚡ <strong>Blazing Fast:</strong> Optimized for the latest Android devices.</li><li>🔒 <strong>Secure & Private:</strong> Your data is always protected.</li><li>🎨 <strong>Beautiful Dark Mode:</strong> Easy on the eyes, day or night.</li></ul>
+            </div>
+
+            <div class="rating-box">
+                <p class="rating-number">4.9</p>
+                <div class="stars">★★★★<span style="opacity:0.5;">★</span></div>
+                <p class="review-count">Based on 100+ reviews</p>
+            </div>
+        </div>
+        
+        <div class="screenshots-row">
+            <h2>💖 What Our Users Are Saying</h2>
+            <div class="screenshot-gallery">
+                <div class="screenshot-item">
+                    <img src="https://via.placeholder.com/300x500/1E1E1E/E0E0E0?text=Review+Screenshot+1" alt="Review Screenshot">
+                </div>
+            
+                <div class="screenshot-item">
+                    <img src="https://via.placeholder.com/300x500/1E1E1E/E0E0E0?text=Review+Screenshot+2" alt="Review Screenshot">
+                </div>
+            
+                <div class="screenshot-item">
+                    <img src="https://via.placeholder.com/300x500/1E1E1E/E0E0E0?text=Review+Screenshot+3" alt="Review Screenshot">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Interactive js
+            
+            const words = ["RHYME","FLOW","BEAT","LYRICS","RAP","MUSIC","ARTIST","CREATIVE","WRITE"];
+            const container = document.querySelector('.container');
+            const fragment = document.createDocumentFragment();
+            for (let i = 0; i < 12; i++) {
+                if(words.length === 0) break;
+                const text = document.createElement('div');
+                text.className = 'floating-text';
+                text.textContent = words[Math.floor(Math.random() * words.length)];
+                text.style.top = Math.random() * 100 + '%';
+                text.style.left = Math.random() * 100 + '%';
+                text.style.animationDelay = (Math.random() * 15) + 's';
+                text.style.animationDuration = (15 + Math.random() * 20) + 's';
+                fragment.appendChild(text);
+            }
+            document.body.appendChild(fragment);
+            
+            // Hover effects
+            const features = document.querySelectorAll('.description-box li');
+            features.forEach(feature => {
+                feature.addEventListener('mouseenter', function () { this.style.transform = 'translateX(10px)'; });
+                feature.addEventListener('mouseleave', function () { this.style.transform = 'translateX(0)'; });
+            });
+            
+             // Parallax
+            document.addEventListener('mousemove', function (e) {
+                const bgElements = document.querySelectorAll('.bg-element');
+                const x = e.clientX / window.innerWidth;
+                const y = e.clientY / window.innerHeight;
+                bgElements.forEach((el, index) => {
+                    const speed = 0.5 + index * 0.2;
+                    const moveX = (x - 0.5) * 20 * speed;
+                    const moveY = (y - 0.5) * 20 * speed;
+                    el.style.transform = `translate(${moveX}px, ${moveY}px)`;
+                });
+            });
+        });
+    </script>
+</body>
+</html>
