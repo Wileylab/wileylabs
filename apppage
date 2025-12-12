@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - [Your App Name]</title>
+    <style>
+        /* --- General Styling for Dark Theme --- */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #121212; /* Very dark background */
+            color: #E0E0E0; /* Light grey text */
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: #1E1E1E; /* Slightly lighter dark background for content area */
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5); /* Deep shadow */
+        }
+
+        /* --- Row 1: Header (Logo, Title, Button) --- */
+        .header-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-bottom: 20px;
+        }
+
+        .app-info {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .logo {
+            width: 72px; /* Standard app icon size */
+            height: 72px;
+            border-radius: 18px;
+            background-color: #333; /* Placeholder color for logo */
+            /* Replace with your actual logo image */
+            /* background-image: url('path/to/your/logo.png'); */
+            /* background-size: cover; */
+        }
+
+        .text-info h1 {
+            margin: 0;
+            font-size: 2.2em;
+            color: #4CAF50; /* Eye-catching green for the name */
+        }
+
+        .text-info p {
+            margin: 0;
+            font-size: 1em;
+            color: #A0A0A0; /* Subdued color for caption */
+        }
+
+        .download-btn {
+            background-color: #4CAF50; /* Android-style green button */
+            color: #FFFFFF;
+            padding: 12px 25px;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        .download-btn:hover {
+            background-color: #66BB6A; /* Lighter green on hover */
+        }
+
+        .divider {
+            border: 0;
+            height: 1px;
+            background-image: linear-gradient(to right, rgba(76, 175, 80, 0), rgba(76, 175, 80, 0.75), rgba(76, 175, 80, 0));
+            margin: 20px 0 30px 0;
+        }
+
+        /* --- Row 2: Description and Rating --- */
+        .content-row {
+            display: flex;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .description-box {
+            flex: 2; /* Takes up more space */
+        }
+
+        .description-box h2 {
+            color: #4CAF50;
+            font-size: 1.5em;
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+
+        .rating-box {
+            flex: 1; /* Takes up less space */
+            background-color: #282828; /* Slightly darker box for rating */
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .rating-number {
+            font-size: 3.5em;
+            font-weight: bold;
+            color: #FFC107; /* Gold color for rating */
+            margin-bottom: 5px;
+        }
+
+        .stars {
+            color: #FFC107;
+            font-size: 1.8em;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+        /* Example star rendering using Unicode characters */
+        .stars span:last-child {
+            opacity: 0.5; /* Fade out the last half-star if needed */
+        }
+
+        .review-count {
+            color: #A0A0A0;
+            font-size: 0.9em;
+        }
+
+        /* --- Row 3: Review Screenshots --- */
+        .screenshots-row h2 {
+            color: #E0E0E0;
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            border-left: 4px solid #4CAF50;
+            padding-left: 10px;
+        }
+
+        .screenshot-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Responsive grid */
+            gap: 25px;
+        }
+
+        .screenshot-item {
+            background-color: #333;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+        
+        .screenshot-item img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border: 2px solid #4CAF50; /* A border to make it pop */
+            border-radius: 8px;
+            opacity: 0.85;
+            transition: opacity 0.3s ease;
+        }
+
+        .screenshot-item img:hover {
+            opacity: 1;
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 600px) {
+            .header-row {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .app-info {
+                margin-bottom: 15px;
+            }
+            .download-btn {
+                width: 100%;
+                text-align: center;
+            }
+            .content-row {
+                flex-direction: column;
+            }
+            .rating-box {
+                order: -1; /* Move rating above description on mobile */
+                margin-bottom: 20px;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    
+    <div class="header-row">
+        <div class="app-info">
+            <div class="logo" title="App Logo"></div>
+            <div class="text-info">
+                <h1>**[Your App Name]**</h1>
+                <p>The must-have tool for modern life on Android.</p>
+            </div>
+        </div>
+        <a href="[Your Play Store Link]" class="download-btn" target="_blank">
+            DOWNLOAD NOW
+        </a>
+    </div>
+
+    <hr class="divider">
+
+    <div class="content-row">
+        <div class="description-box">
+            <h2>✨ What Makes Us Essential</h2>
+            <p>
+                [Your App Name] is built from the ground up to solve your biggest **[Target Problem]**. 
+                With an intuitive, sleek interface and blazing-fast performance, you'll wonder how you ever managed without it. 
+                Our cutting-edge **[Feature 1]** and integrated **[Feature 2]** deliver power and simplicity directly to your fingertips. 
+                Download today and transform your **[Aspect of Life]**!
+            </p>
+            <ul>
+                <li>⚡ **Blazing Fast:** Optimized for the latest Android devices.</li>
+                <li>🔒 **Secure & Private:** Your data is always protected.</li>
+                <li>🎨 **Beautiful Dark Mode:** Easy on the eyes, day or night.</li>
+            </ul>
+        </div>
+
+        <div class="rating-box">
+            <p class="rating-number">4.7</p>
+            <div class="stars">
+                ★★★★<span>★</span>
+            </div>
+            <p class="review-count">Based on 125,000+ reviews</p>
+        </div>
+    </div>
+    
+    <div class="screenshots-row">
+        <h2>💖 What Our Users Are Saying</h2>
+        <div class="screenshot-gallery">
+            <div class="screenshot-item">
+                <img src="https://via.placeholder.com/300x500/1E1E1E/E0E0E0?text=Review+Screenshot+1" alt="User Review 1">
+            </div>
+            <div class="screenshot-item">
+                <img src="https://via.placeholder.com/300x500/1E1E1E/E0E0E0?text=Review+Screenshot+2" alt="User Review 2">
+            </div>
+            <div class="screenshot-item">
+                <img src="https://via.placeholder.com/300x500/1E1E1E/E0E0E0?text=Review+Screenshot+3" alt="User Review 3">
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
