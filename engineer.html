@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wileylabs Builder V7 (Multi-Type)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        body { font-family: 'Poppins', sans-serif; background: #1a1a1a; color: white; display: flex; height: 100vh; overflow: hidden; }
+        
+        /* Editor Sidebar */
+        #editor { width: 350px; background: #222; border-right: 1px solid #333; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 20px; box-shadow: 2px 0 10px rgba(0,0,0,0.5); z-index: 10; }
+        
+        /* Upload Section */
+        .upload-box { background: #333; padding: 15px; border-radius: 8px; border: 2px dashed #555; text-align: center; }
+        .upload-box:hover { border-color: #4facfe; }
+        .upload-label { cursor: pointer; color: #4facfe; font-size: 0.9rem; font-weight: bold; }
+        
+        /* Input Styling */
+        .input-group { margin-bottom: 15px; background: #2a2a2a; padding: 10px; rounded: 8px; border: 1px solid #333; }
+        label { display: block; font-size: 0.8rem; color: #888; margin-bottom: 5px; }
+        input, select { width: 100%; background: #111; border: 1px solid #444; color: white; padding: 8px; rounded: 4px; margin-bottom: 8px; }
+        
+        /* Buttons */
+        .btn-container { display: flex; gap: 5px; }
+        button.action-submit { flex: 1; background: #007bff; color: white; padding: 8px; rounded: 4px; font-weight: bold; cursor: pointer; border: none; }
+        button.action-submit:hover { background: #0062cc; }
+        button.action-cancel { background: #555; color: white; padding: 8px; rounded: 4px; font-weight: bold; cursor: pointer; border: none; display: none; }
+        
+        /* Update Mode Colors */
+        .editing button.action-submit { background: #28a745; }
+        .editing button.action-cancel { display: block; }
+        
+        /* Item List */
+        .item-list { margin-top: 10px; }
+        .item { display: flex; justify-content: space-between; align-items: center; background: #333; padding: 8px; margin-bottom: 5px; rounded: 4px; font-size: 0.85rem; border-left: 3px solid transparent; }
+        .item:hover { background: #3a3a3a; }
+        .item-actions { display: flex; gap: 10px; }
+        .edit-btn { color: #ffc107; cursor: pointer; }
+        .delete-btn { color: #ff4d4d; cursor: pointer; }
+        .type-badge { font-size: 0.7rem; padding: 2px 6px; border-radius: 4px; background: #444; color: #aaa; margin-right: 8px; }
+
+        /* Preview Area */
+        #preview-container { flex: 1; position: relative; background: #0e0f11; overflow-y: auto; }
+        
+        /* Floating Action Buttons */
+        .fab-container { position: absolute; top: 20px; right: 20px; z-index: 100; display: flex; gap: 10px; }
+        .action-btn { padding: 10px 20px; border-radius: 50px; font-weight: bold; cursor: pointer; border: none; transition: transform 0.2s; display: flex; items-center; gap: 8px; }
+        .action-btn:hover { transform: scale(1.05); }
+        #download-btn { background: #28a745; color: white; box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3); }
+        #copy-btn { background: #6f42c1; color: white; box-shadow: 0 4px 15px rgba(111, 66, 193, 0.3); }
+
+        /* Section Dividers */
+        h2.section-title { font-size: 1.1rem; border-bottom: 1px solid #444; padding-bottom: 5px; margin-bottom: 10px; color: #4facfe; }
+
+        /* --- FINAL PAGE STYLES --- */
+        .w-preview-body { font-family: 'Poppins', sans-serif; background: #0e0f11; color: white; }
+        .gradient-text { background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .glass { background: rgba(255, 255, 255, 0.06); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.12); overflow: hidden; }
+        .star { color: #ffd700; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body>
+
+    <div id="editor">
+        <h1 class="text-xl font-bold mb-2">Wileylabs Builder</h1>
+        
+        <div class="upload-box">
+            <label for="fileUpload" class="upload-label">
+                <i class="fas fa-upload mb-2"></i><br>
+                Load Existing index.html
+            </label>
+            <input type="file" id="fileUpload" accept=".html" style="display: none;" onchange="handleFileUpload(this)">
+        </div>
+        <p class="text-xs text-gray-500 text-center mb-6">Upload previously downloaded file to edit.</p>
+
+        <h2 class="section-title">Row 1: Android Apps</h2>
+        <div class="input-group" id="group-apps">
+            <label>App Name</label>
+            <input type="text" id="appName" placeholder="e.g., Star Gazer">
+            <label>Image URL</label>
+            <input type="text" id="appImg" placeholder="path/to/image.png" value="assets/app_icon.png">
+            <label>Rating (1-5)</label>
+            <input type="number" id="appRate" min="1" max="5" value="5">
+            <label>About Link</label>
+            <input type="text" id="appLink" placeholder="page-url.html">
+            
+            <div class="btn-container">
+                <button class="action-submit" id="btn-apps" onclick="handleItemSubmit('apps')">Add App</button>
+                <button class="action-cancel" onclick="cancelEdit('apps')">Cancel</button>
+            </div>
+        </div>
+        <div id="list-apps" class="item-list"></div>
+
+        <h2 class="section-title">Row 2: Online Tools</h2>
+        <div class="input-group" id="group-tools">
+            <label>Tool Name</label>
+            <input type="text" id="toolName" placeholder="e.g., Image Resizer">
+            <label>Image URL</label>
+            <input type="text" id="toolImg" placeholder="path/to/image.png" value="assets/tool_icon.png">
+            <label>Tool Link</label>
+            <input type="text" id="toolLink" placeholder="https://tool-url.com">
+            
+            <div class="btn-container">
+                <button class="action-submit" id="btn-tools" onclick="handleItemSubmit('tools')">Add Tool</button>
+                <button class="action-cancel" onclick="cancelEdit('tools')">Cancel</button>
+            </div>
+        </div>
+        <div id="list-tools" class="item-list"></div>
+
+        <h2 class="section-title">Row 3: Information</h2>
+        <div class="input-group" id="group-about">
+            <label>Content Type</label>
+            <select id="aboutType" onchange="toggleAboutInput()">
+                <option value="link">Hyperlink</option>
+                <option value="text">Plain Text</option>
+            </select>
+            
+            <label>Display Text</label>
+            <input type="text" id="aboutText" placeholder="e.g., Contact Us">
+            
+            <div id="aboutLinkContainer">
+                <label>Link URL</label>
+                <input type="text" id="aboutLink" placeholder="#contact">
+            </div>
+            
+            <div class="btn-container">
+                <button class="action-submit" id="btn-about" onclick="handleItemSubmit('about')">Add Item</button>
+                <button class="action-cancel" onclick="cancelEdit('about')">Cancel</button>
+            </div>
+        </div>
+        <div id="list-about" class="item-list"></div>
+    </div>
+
+    <div id="preview-container">
+        <div class="fab-container">
+            <button id="copy-btn" class="action-btn" onclick="copyHTML()">
+                <i class="fas fa-copy"></i> Copy HTML
+            </button>
+            <button id="download-btn" class="action-btn" onclick="downloadHTML()">
+                <i class="fas fa-download"></i> Download
+            </button>
+        </div>
+        <div id="live-preview" class="w-preview-body min-h-screen"></div>
+    </div>
+
+    <script>
+        // --- DATA STORE ---
+        let data = {
+            apps: [{ name: "Demo App", img: "https://cdn-icons-png.flaticon.com/512/2647/2647296.png", rate: "5", link: "#" }],
+            tools: [{ name: "Demo Tool", img: "https://cdn-icons-png.flaticon.com/512/3075/3075908.png", link: "#" }],
+            // 'type' is optional in old files, default to link
+            about: [{ text: "Privacy Policy", link: "#", type: "link" }, { text: "Version 1.0", link: "", type: "text" }]
+        };
+
+        let editState = { apps: null, tools: null, about: null };
+
+        // --- UI TOGGLE FOR ROW 3 ---
+        function toggleAboutInput() {
+            const type = document.getElementById('aboutType').value;
+            const linkInput = document.getElementById('aboutLinkContainer');
+            if(type === 'text') {
+                linkInput.style.display = 'none';
+            } else {
+                linkInput.style.display = 'block';
+            }
+        }
+
+        // --- UPLOAD LOGIC ---
+        function handleFileUpload(input) {
+            const file = input.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const content = e.target.result;
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(content, 'text/html');
+                const scriptTag = doc.getElementById('site-data');
+                if (scriptTag) {
+                    try {
+                        data = JSON.parse(scriptTag.textContent);
+                        // Fix for older files without 'type' property
+                        data.about.forEach(item => {
+                            if(!item.type) item.type = 'link'; 
+                        });
+                        updatePreview();
+                        alert("Website Configuration Loaded!");
+                    } catch (err) { alert("Error: Data corrupted."); }
+                } else { alert("Error: Missing config data."); }
+            };
+            reader.readAsText(file);
+        }
+
+        // --- RENDER EDITOR LISTS ---
+        function renderEditorLists() {
+            document.getElementById('list-apps').innerHTML = data.apps.map((item, i) => 
+                `<div class="item"><span>${item.name}</span> <div class="item-actions"><i class="fas fa-pencil-alt edit-btn" onclick="startEdit('apps', ${i})"></i><i class="fas fa-trash delete-btn" onclick="deleteItem('apps', ${i})"></i></div></div>`
+            ).join('');
+
+            document.getElementById('list-tools').innerHTML = data.tools.map((item, i) => 
+                `<div class="item"><span>${item.name}</span> <div class="item-actions"><i class="fas fa-pencil-alt edit-btn" onclick="startEdit('tools', ${i})"></i><i class="fas fa-trash delete-btn" onclick="deleteItem('tools', ${i})"></i></div></div>`
+            ).join('');
+
+            document.getElementById('list-about').innerHTML = data.about.map((item, i) => {
+                const icon = item.type === 'text' ? 'fa-align-left' : 'fa-link';
+                return `<div class="item">
+                    <div><span class="type-badge"><i class="fas ${icon}"></i></span> ${item.text}</div> 
+                    <div class="item-actions"><i class="fas fa-pencil-alt edit-btn" onclick="startEdit('about', ${i})"></i><i class="fas fa-trash delete-btn" onclick="deleteItem('about', ${i})"></i></div>
+                </div>`;
+            }).join('');
+        }
+
+        // --- PREVIEW GENERATOR ---
+        function generateStars(count) {
+            let stars = '';
+            for(let i=0; i<5; i++) stars += i < count ? '<span class="star">★</span>' : '<span class="text-gray-600">★</span>';
+            return stars;
+        }
+
+        function generatePreviewHTML() {
+            const appsHTML = data.apps.map(app => `
+                <a href="${app.link}" class="glass rounded-xl min-w-[200px] w-[200px] flex flex-col hover:scale-105 transition transform cursor-pointer snap-center">
+                    <img src="${app.img}" class="w-full h-32 object-cover bg-black/30">
+                    <div class="p-4 flex flex-col items-center">
+                        <h3 class="text-sm font-semibold text-center mb-1 truncate w-full">${app.name}</h3>
+                        <div class="text-xs mb-2">${generateStars(app.rate)}</div>
+                        <span class="text-xs text-blue-400">View Info &rarr;</span>
+                    </div>
+                </a>
+            `).join('');
+
+            const toolsHTML = data.tools.map(tool => `
+                <a href="${tool.link}" class="glass p-4 rounded-xl flex items-center space-x-4 hover:bg-white/10 transition cursor-pointer">
+                    <img src="${tool.img}" class="w-12 h-12 object-contain">
+                    <div>
+                        <h3 class="text-lg font-semibold">${tool.name}</h3>
+                        <span class="text-xs text-gray-400">Launch Tool</span>
+                    </div>
+                </a>
+            `).join('');
+
+            const aboutHTML = data.about.map(item => {
+                if(item.type === 'text') {
+                    // Plain Text Style
+                    return `<div class="block px-4 py-2 text-gray-500 cursor-default transition text-center md:text-left">${item.text}</div>`;
+                } else {
+                    // Hyperlink Style
+                    return `<a href="${item.link}" class="block px-4 py-2 text-gray-300 hover:text-white hover:bg-white/5 rounded-lg transition text-center md:text-left">${item.text}</a>`;
+                }
+            }).join('');
+
+            return `
+            <section class="min-h-[50vh] flex flex-col justify-center items-center text-center px-6 pt-10">
+                <h1 class="text-4xl md:text-6xl font-bold mb-4">Wileylabs <span class="gradient-text">Hub</span></h1>
+                <p class="text-gray-300 max-w-xl">Central Command for all Apps, Tools, and Experiments.</p>
+            </section>
+            <div class="max-w-4xl mx-auto pb-20 space-y-12 px-6">
+                <section class="fade-in">
+                    <h2 class="text-xl font-bold mb-4 border-l-4 border-blue-500 pl-3">Our Apps</h2>
+                    <div class="flex overflow-x-auto space-x-4 pb-4 no-scrollbar snap-x">
+                        ${appsHTML || '<div class="text-gray-500 italic">No apps added yet.</div>'}
+                    </div>
+                </section>
+                <section class="fade-in">
+                    <h2 class="text-xl font-bold mb-4 border-l-4 border-cyan-400 pl-3">Online Tools</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        ${toolsHTML || '<div class="text-gray-500 italic">No tools added yet.</div>'}
+                    </div>
+                </section>
+                <section class="fade-in">
+                     <h2 class="text-xl font-bold mb-4 border-l-4 border-purple-500 pl-3">Information</h2>
+                     <div class="glass rounded-xl p-4 grid grid-cols-1 md:grid-cols-2 gap-2">
+                        ${aboutHTML || '<div class="text-gray-500 italic">No info added.</div>'}
+                     </div>
+                </section>
+            </div>`;
+        }
+
+        function updatePreview() {
+            renderEditorLists();
+            document.getElementById('live-preview').innerHTML = generatePreviewHTML();
+        }
+
+        // --- EDIT & ADD LOGIC ---
+        function startEdit(type, index) {
+            const item = data[type][index];
+            editState[type] = index;
+
+            if(type === 'apps') {
+                document.getElementById('appName').value = item.name;
+                document.getElementById('appImg').value = item.img;
+                document.getElementById('appRate').value = item.rate;
+                document.getElementById('appLink').value = item.link;
+                document.getElementById('group-apps').classList.add('editing');
+                document.getElementById('btn-apps').innerText = "Update App";
+            }
+            if(type === 'tools') {
+                document.getElementById('toolName').value = item.name;
+                document.getElementById('toolImg').value = item.img;
+                document.getElementById('toolLink').value = item.link;
+                document.getElementById('group-tools').classList.add('editing');
+                document.getElementById('btn-tools').innerText = "Update Tool";
+            }
+            if(type === 'about') {
+                document.getElementById('aboutText').value = item.text;
+                document.getElementById('aboutLink').value = item.link || '';
+                document.getElementById('aboutType').value = item.type || 'link';
+                toggleAboutInput(); // Refresh visibility
+                document.getElementById('group-about').classList.add('editing');
+                document.getElementById('btn-about').innerText = "Update Item";
+            }
+        }
+
+        function cancelEdit(type) {
+            editState[type] = null;
+            if(type === 'apps') {
+                document.getElementById('appName').value = '';
+                document.getElementById('appImg').value = 'assets/app_icon.png';
+                document.getElementById('appRate').value = 5;
+                document.getElementById('appLink').value = '';
+                document.getElementById('group-apps').classList.remove('editing');
+                document.getElementById('btn-apps').innerText = "Add App";
+            }
+            if(type === 'tools') {
+                document.getElementById('toolName').value = '';
+                document.getElementById('toolImg').value = 'assets/tool_icon.png';
+                document.getElementById('toolLink').value = '';
+                document.getElementById('group-tools').classList.remove('editing');
+                document.getElementById('btn-tools').innerText = "Add Tool";
+            }
+            if(type === 'about') {
+                document.getElementById('aboutText').value = '';
+                document.getElementById('aboutLink').value = '';
+                document.getElementById('aboutType').value = 'link';
+                toggleAboutInput();
+                document.getElementById('group-about').classList.remove('editing');
+                document.getElementById('btn-about').innerText = "Add Item";
+            }
+        }
+
+        function handleItemSubmit(type) {
+            let newItem = {};
+            let isValid = false;
+
+            if(type === 'apps') {
+                const name = document.getElementById('appName').value;
+                const img = document.getElementById('appImg').value;
+                const rate = document.getElementById('appRate').value;
+                const link = document.getElementById('appLink').value;
+                if(name) { newItem = {name, img, rate, link}; isValid = true; }
+            }
+            if(type === 'tools') {
+                const name = document.getElementById('toolName').value;
+                const img = document.getElementById('toolImg').value;
+                const link = document.getElementById('toolLink').value;
+                if(name) { newItem = {name, img, link}; isValid = true; }
+            }
+            if(type === 'about') {
+                const text = document.getElementById('aboutText').value;
+                const link = document.getElementById('aboutLink').value;
+                const itemType = document.getElementById('aboutType').value;
+                if(text) { newItem = {text, link, type: itemType}; isValid = true; }
+            }
+
+            if(isValid) {
+                if (editState[type] !== null) {
+                    data[type][editState[type]] = newItem;
+                } else {
+                    data[type].push(newItem);
+                }
+                updatePreview();
+                cancelEdit(type);
+            }
+        }
+
+        function deleteItem(type, index) {
+            if(confirm("Are you sure you want to delete this?")) {
+                data[type].splice(index, 1);
+                updatePreview();
+                if (editState[type] === index) cancelEdit(type);
+            }
+        }
+
+        // --- EXPORT FUNCTIONS ---
+        function getFullHTMLString() {
+            const bodyContent = generatePreviewHTML();
+            const jsonData = JSON.stringify(data);
+            return `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Wileylabs</title>
+    <script id="site-data" type="application/json">${jsonData}<\/script>
+    <script src="https://cdn.tailwindcss.com"><\/script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Poppins', sans-serif; background: #0e0f11; color: white; }
+        .fade-in { animation: fadeIn 1.4s forwards ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .gradient-text { background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .glass { background: rgba(255, 255, 255, 0.06); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.12); overflow: hidden; }
+        .star { color: #ffd700; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body>
+    <nav class="w-full py-6 px-8 flex justify-between items-center fade-in">
+        <h1 class="text-2xl font-bold gradient-text">Wileylabs</h1>
+    </nav>
+    ${bodyContent}
+    <footer class="py-8 text-center text-gray-400 fade-in text-sm">
+        © 2025 Wileylabs • All Rights Reserved
+    </footer>
+</body>
+</html>`;
+        }
+
+        function downloadHTML() {
+            const fullHTML = getFullHTMLString();
+            const blob = new Blob([fullHTML], { type: 'text/html' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'index.html';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        }
+
+        function copyHTML() {
+            const fullHTML = getFullHTMLString();
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(fullHTML).then(showSuccess).catch(() => fallbackCopy(fullHTML));
+            } else { fallbackCopy(fullHTML); }
+        }
+
+        function fallbackCopy(text) {
+            var textArea = document.createElement("textarea");
+            textArea.value = text;
+            textArea.style.position = "fixed";
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            try { document.execCommand('copy') ? showSuccess() : alert("Copy failed."); } 
+            catch (err) { alert("Copy failed."); }
+            document.body.removeChild(textArea);
+        }
+
+        function showSuccess() {
+            const btn = document.getElementById('copy-btn');
+            const originalText = '<i class="fas fa-copy"></i> Copy HTML';
+            btn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+            btn.style.background = '#28a745';
+            setTimeout(() => { btn.innerHTML = originalText; btn.style.background = '#6f42c1'; }, 2000);
+        }
+
+        // Initialize
+        toggleAboutInput();
+        updatePreview();
+    </script>
+</body>
+</html>
